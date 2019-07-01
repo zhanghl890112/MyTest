@@ -1,0 +1,1 @@
+mvn clean package -e -Ptest -Dmaven.test.skip=true && pause

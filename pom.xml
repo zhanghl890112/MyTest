@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<!-- 项目或者组织的唯一标志，并且配置时生成路径也是由此生成 -->
+	<groupId>my.test</groupId>
+	<!-- 项目的通用名称 -->
+	<artifactId>MyTest</artifactId>
+	<!-- 项目的版本 -->
+	<version>0.1-SNAPSHOT</version>
+	<!-- 打包机制，如pom,jar,maven-plugin,ejb,war,ear,rar,par -->
+	<packaging>war</packaging>
+	<build>
+		<!-- 项目打包后的包名，如果有则按设置的名称作为包名;没有文件扩展名则默认值${artifactId}-${version}两个值拼接的结果 -->
+		<finalName>zhanghl</finalName>
+		<!--这个元素描述了项目相关的所有资源路径列表，例如和项目相关的属性文件，这些资源被包含在最终的打包文件里。 -->
+		<resources>
+			<!--这个元素描述了项目相关的资源路径 -->
+			<resource>
+				<!--描述存放资源的目录，该路径相对POM路径。默认值${basedir}/src/main/resources -->
+				<directory>src/main/resources</directory>
+				<!--是否使用参数值代替参数名。如：aa=name 将my ${aa}显示为my name。true代表替换，false代表不替换。参数值取自properties元素、文件里配置的属性或者命令行的-D选项。有@aa@和${aa}俩种写法。更多内容请查看在线帮助 -->
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- 指定maven编译的jdk版本,如果不指定,maven3默认用jdk 1.5 maven2默认用jdk1.3 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<!-- 利用maven打war包插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- 其他配置，键值对 -->
+	<properties>
+		<spring.version>4.2.5.RELEASE</spring.version>
+	</properties>
+	<!--该元素描述了项目相关的所有依赖。这些依赖组成了项目构建过程中的一个个环节。它们自动从项目定义的仓库中下载。 -->
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.7.16</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<!--根据环境参数或命令行参数激活某个构建处理 -->
+		<profile>
+			<!--构建配置的唯一标识符。即用于命令行激活，也用于在继承时合并具有相同标识符的profile。 -->
+			<id>dev</id>
+			<!--自动触发profile的条件逻辑。Activation是profile的开启钥匙。如POM中的profile一样，profile的力量来自于它能够在某些特定的环境中自动使用某些特定的值；这些环境通过activation元素指定。activation元素并不是激活profile的唯一方式。settings.xml文件中的activeProfile元素可以包含profile的id。profile也可以通过在命令行，使用-P标记和逗号分隔的列表来显式的激活（如，-P 
+				test）。 -->
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<logger.level>info</logger.level>
+				<logger.file>../logs/MyTest.log</logger.file>
+				<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+				<lottery.api.version>0.0.11</lottery.api.version>
+			</properties>
+		</profile>
+	</profiles>
+</project>
