@@ -47,7 +47,7 @@
 	</build>
 	<!-- 其他配置，键值对 -->
 	<properties>
-		<spring.version>4.2.5.RELEASE</spring.version>
+		<spring.version>5.3.18</spring.version>
 	</properties>
 	<!--该元素描述了项目相关的所有依赖。这些依赖组成了项目构建过程中的一个个环节。它们自动从项目定义的仓库中下载。 -->
 	<dependencies>
